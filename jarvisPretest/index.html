@@ -57,7 +57,7 @@
     #app .mainContainer{
         margin-top: 56px;
         width:100%;
-        /* height: calc(100vh - 56px); */
+        height: calc(100vh - 56px);
         overflow-y:auto;
         display: grid;
         grid-template-columns: 100px auto ;
@@ -90,10 +90,11 @@
     }
     .mainContainer .cursorContainer .leftArrow{
         left: 0;
+        top: 5%;
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 100px 100px 100px 0;
+        border-width: 75px 75px 75px 0;
         border-color: transparent silver transparent transparent;
     }
     .mainContainer .cursorContainer .leftArrow:hover{
@@ -101,10 +102,11 @@
     }
     .mainContainer .cursorContainer .rightArrow{
         right: 0;
+        top: 5%;
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 100px 0 100px 100px;
+        border-width: 75px 0 75px 75px;
         border-color: transparent transparent transparent silver;
     }
     .mainContainer .cursorContainer .rightArrow:hover{
@@ -228,6 +230,16 @@
         border-radius: 0 0 20px 20px;
         cursor: pointer;
     }
+    .gotopBtn{
+        position:absolute;
+        right: 50px;
+        bottom: 100px;
+        width: 70px;
+        height: 50px;
+        cursor: pointer;
+        background-color: blueviolet;
+        color: white;
+    }
 </style>
 <body>
     <div id="app">
@@ -236,7 +248,7 @@
             <i class="fas fa-search searchIcon"></i>
             <button class="deleteIcon" @click="itemsSearchDelFnc"><i class="fas fa-times-circle"></i></button>
         </div>
-        <div class="mainContainer">
+        <div class="mainContainer" ref="main">
             <div class="cursorContainer">
                 <div class="ad">{{cursor[cursorSet.nowIndex].adTitle}}</div>
                 <div class="leftArrow" @click="leftArrowFnc"></div>
@@ -258,7 +270,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="blockContainer" v-show="blockSet.show">
             <div class="shadow"></div>
             <div class="content">
@@ -267,6 +278,7 @@
                 <button class="contentFooter" @click="itemPopupFnc(-1)">關閉</button>
             </div>
         </div>
+        <button class="gotopBtn" @click="gotopFnc">gotop</button>
     </div>
 </body>
 <script>
@@ -542,6 +554,10 @@
                 if(index != -1){
                     this.blockSet.content = this.items[index].name
                 }
+            },
+            //置頂功能
+            gotopFnc: function(){
+                console.log(this.$refs.main.scrollTo(0,0))
             }
         },
         created() {
